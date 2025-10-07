@@ -141,24 +141,48 @@ class Bomb:
         screen.blit(self.img, self.rct)
 
 class Score:
+    """
+    スコアに関するクラス
+    """
     def __init__(self):
+        """
+        スコアクラスのコンストラクタ
+        スコア表示の座標、初期状態の設定を行う
+        """
         self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
         self.score = 0
         self.img = self.fonto.render("スコア:" + str(self.score), 0, (0,0,255))
         self.img_rct = self.img.get_rect()
         self.img_rct.center = (100, HEIGHT - 50)
     def update(self,screen : pg.Surface):
+        """
+        引数 Surface型の表示用のスクリーン
+        現在のスコアに更新する
+        """
         self.img = self.img = self.fonto.render("スコア:" + str(self.score), 0, (0,0,255))
         screen.blit(self.img,self.img_rct)
 
 class Explosion:
+    """
+    爆発の演出に関するクラス
+    """
     def __init__(self,bomb : pg.Rect):
+        """
+        Explosionクラスのコンストラクタ
+        引数 爆発演出を行いたい爆弾のRect型
+        爆発演出の時間、画像、座標の設定
+        """
         self.life = 60
         self.img = pg.image.load(f"fig/explosion.gif")
         self.img_f = pg.transform.flip(self.img, True, True)
         self.rct = self.img.get_rect()
         self.rct.center = bomb.center
     def update(self, screen: pg.Surface):
+        """
+        引数 表示したい画面のSurface型
+        表示時間のカウントを進める
+        時間によって爆発画像の切り替えを行う
+        """
         self.life -= 1
         if self.life > 0 :
             if self.life % 10 == 0:
